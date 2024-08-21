@@ -114,7 +114,7 @@ const Chat: React.FC<ChatProps> = ({ username }) => {
           onKeyDown={handleKeyDown}
           rows={textAreaRows}
           style={{
-            minHeight: textAreaRows === 1 ? "2.5em" : "auto",
+            minHeight: textAreaRows === 1 ? "2rem" : "auto",
             width: "100%",
           }}
         />
