@@ -38,3 +38,11 @@ Please refer to the video: [📽️ Video](https://drive.google.com/file/d/1JnsT
 - Team members may leave some comments on your PR as code review; feel welcome to respond and interact there, or send a private message if you prefer.
 
 If you have any questions about the assignment or the process, you are welcome to send an email and ask. Thank you for taking the time to complete this application, and good luck!
+
+## Execution Steps
+
+1. Clone the repository
+2. Navigate to the project directory: `cd exam-local-chat`
+3. Install dependencies: `pnpm install`
+4. Open the other termial to start the development server: `pnpm start`
+5. Open your browser and go to `http://localhost:{{PORT}}` to view the application.
