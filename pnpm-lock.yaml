@@ -13,6 +13,9 @@ importers:
       "@radix-ui/react-form":
         specifier: ^0.1.0
         version: 0.1.0(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      "@radix-ui/react-icons":
+        specifier: ^1.3.0
+        version: 1.3.0(react@18.2.0)
       "@radix-ui/themes":
         specifier: ^3.1.3
         version: 3.1.3(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -39,7 +42,7 @@ importers:
         version: 2.5.2
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.10)
+        version: 1.0.7(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3)))
     devDependencies:
       "@commitlint/cli":
         specifier: ^18.5.0
@@ -118,7 +121,7 @@ importers:
         version: 3.2.4
       tailwindcss:
         specifier: ^3.4.10
-        version: 3.4.10
+        version: 3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3))
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
@@ -142,11 +145,26 @@ importers:
         version: 2.5.2
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.10)
+        version: 1.0.7(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3)))
 
   packages/build: {}
 
   packages/tsconfig: {}
+
+  server:
+    dependencies:
+      "@types/ws":
+        specifier: ^8.5.12
+        version: 8.5.12
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      ws:
+        specifier: ^8.18.0
+        version: 8.18.0
 
 packages:
   "@aashutoshrathi/word-wrap@1.2.6":
@@ -464,6 +482,13 @@ packages:
         integrity: sha512-/FykLtodD8gKs3+VNkAUwofu4LBHankclj+I8fB2jTRvG6PV7k/OUt4P+VbM7ip853qS4F0g7Z6hLNa6JeMcAQ==,
       }
     engines: { node: ">=v18" }
+
+  "@cspotcode/source-map-support@0.8.1":
+    resolution:
+      {
+        integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==,
+      }
+    engines: { node: ">=12" }
 
   "@esbuild/aix-ppc64@0.19.11":
     resolution:
@@ -789,6 +814,12 @@ packages:
     resolution:
       {
         integrity: sha512-Wf963MzWtA2sjrNt+g18IAln9lKnlRp+K2eH4jjIoF1wYeq3aMREpG09xhlhdzS0EjwU7qmUJYangWa+151vZw==,
+      }
+
+  "@jridgewell/trace-mapping@0.3.9":
+    resolution:
+      {
+        integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==,
       }
 
   "@microsoft/tsdoc-config@0.16.2":
@@ -1127,6 +1158,14 @@ packages:
         optional: true
       "@types/react-dom":
         optional: true
+
+  "@radix-ui/react-icons@1.3.0":
+    resolution:
+      {
+        integrity: sha512-jQxj/0LKgp+j9BiTXz3O3sgs26RNet2iLWmsPyRz2SIcR4q/4SbazXfnYwbAr+vLYKSfc7qxzyGQA1HLlYiuNw==,
+      }
+    peerDependencies:
+      react: ^16.x || ^17.x || ^18.x
 
   "@radix-ui/react-id@1.1.0":
     resolution:
@@ -1696,6 +1735,30 @@ packages:
         integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==,
       }
 
+  "@tsconfig/node10@1.0.11":
+    resolution:
+      {
+        integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==,
+      }
+
+  "@tsconfig/node12@1.0.11":
+    resolution:
+      {
+        integrity: sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==,
+      }
+
+  "@tsconfig/node14@1.0.3":
+    resolution:
+      {
+        integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==,
+      }
+
+  "@tsconfig/node16@1.0.4":
+    resolution:
+      {
+        integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==,
+      }
+
   "@tsconfig/node20@20.1.2":
     resolution:
       {
@@ -1796,6 +1859,12 @@ packages:
     resolution:
       {
         integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==,
+      }
+
+  "@types/ws@8.5.12":
+    resolution:
+      {
+        integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==,
       }
 
   "@typescript-eslint/eslint-plugin@6.19.0":
@@ -1910,6 +1979,13 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
 
+  acorn-walk@8.3.3:
+    resolution:
+      {
+        integrity: sha512-MxXdReSRhGO7VlFe1bRG/oI7/mdLV9B9JJT0N8vZOhF7gFRR5l3M8W9G8JxmKV+JC5mGqJ0QvqfSOLsCPa4nUw==,
+      }
+    engines: { node: ">=0.4.0" }
+
   acorn@8.11.3:
     resolution:
       {
@@ -1984,6 +2060,12 @@ packages:
         integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==,
       }
     engines: { node: ">= 8" }
+
+  arg@4.1.3:
+    resolution:
+      {
+        integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==,
+      }
 
   arg@5.0.2:
     resolution:
@@ -2305,6 +2387,12 @@ packages:
       typescript:
         optional: true
 
+  create-require@1.1.1:
+    resolution:
+      {
+        integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==,
+      }
+
   cross-spawn@7.0.3:
     resolution:
       {
@@ -2376,6 +2464,13 @@ packages:
       {
         integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==,
       }
+
+  diff@4.0.2:
+    resolution:
+      {
+        integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==,
+      }
+    engines: { node: ">=0.3.1" }
 
   dir-glob@3.0.1:
     resolution:
@@ -3316,6 +3411,12 @@ packages:
       }
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+
+  make-error@1.3.6:
+    resolution:
+      {
+        integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==,
+      }
 
   map-obj@1.0.1:
     resolution:
@@ -4320,6 +4421,23 @@ packages:
         integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==,
       }
 
+  ts-node@10.9.2:
+    resolution:
+      {
+        integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==,
+      }
+    hasBin: true
+    peerDependencies:
+      "@swc/core": ">=1.2.50"
+      "@swc/wasm": ">=1.2.50"
+      "@types/node": "*"
+      typescript: ">=2.7"
+    peerDependenciesMeta:
+      "@swc/core":
+        optional: true
+      "@swc/wasm":
+        optional: true
+
   tslib@2.6.2:
     resolution:
       {
@@ -4438,6 +4556,12 @@ packages:
         integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
       }
 
+  v8-compile-cache-lib@3.0.1:
+    resolution:
+      {
+        integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==,
+      }
+
   validate-npm-package-license@3.0.4:
     resolution:
       {
@@ -4510,6 +4634,21 @@ packages:
         integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==,
       }
 
+  ws@8.18.0:
+    resolution:
+      {
+        integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==,
+      }
+    engines: { node: ">=10.0.0" }
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ">=5.0.2"
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   y18n@5.0.8:
     resolution:
       {
@@ -4556,6 +4695,13 @@ packages:
         integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==,
       }
     engines: { node: ">=12" }
+
+  yn@3.1.1:
+    resolution:
+      {
+        integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==,
+      }
+    engines: { node: ">=6" }
 
   yocto-queue@0.1.0:
     resolution:
@@ -4823,6 +4969,10 @@ snapshots:
     dependencies:
       chalk: 4.1.2
 
+  "@cspotcode/source-map-support@0.8.1":
+    dependencies:
+      "@jridgewell/trace-mapping": 0.3.9
+
   "@esbuild/aix-ppc64@0.19.11":
     optional: true
 
@@ -4966,6 +5116,11 @@ snapshots:
   "@jridgewell/sourcemap-codec@1.4.15": {}
 
   "@jridgewell/trace-mapping@0.3.22":
+    dependencies:
+      "@jridgewell/resolve-uri": 3.1.1
+      "@jridgewell/sourcemap-codec": 1.4.15
+
+  "@jridgewell/trace-mapping@0.3.9":
     dependencies:
       "@jridgewell/resolve-uri": 3.1.1
       "@jridgewell/sourcemap-codec": 1.4.15
@@ -5212,6 +5367,10 @@ snapshots:
     optionalDependencies:
       "@types/react": 18.2.48
       "@types/react-dom": 18.2.18
+
+  "@radix-ui/react-icons@1.3.0(react@18.2.0)":
+    dependencies:
+      react: 18.2.0
 
   "@radix-ui/react-id@1.1.0(@types/react@18.2.48)(react@18.2.0)":
     dependencies:
@@ -5686,6 +5845,14 @@ snapshots:
 
   "@total-typescript/ts-reset@0.5.1": {}
 
+  "@tsconfig/node10@1.0.11": {}
+
+  "@tsconfig/node12@1.0.11": {}
+
+  "@tsconfig/node14@1.0.3": {}
+
+  "@tsconfig/node16@1.0.4": {}
+
   "@tsconfig/node20@20.1.2": {}
 
   "@tsconfig/strictest@2.0.2": {}
@@ -5740,6 +5907,10 @@ snapshots:
   "@types/scheduler@0.16.8": {}
 
   "@types/semver@7.5.6": {}
+
+  "@types/ws@8.5.12":
+    dependencies:
+      "@types/node": 20.11.5
 
   "@typescript-eslint/eslint-plugin@6.19.0(@typescript-eslint/parser@6.19.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)":
     dependencies:
@@ -5849,6 +6020,10 @@ snapshots:
     dependencies:
       acorn: 8.11.3
 
+  acorn-walk@8.3.3:
+    dependencies:
+      acorn: 8.11.3
+
   acorn@8.11.3: {}
 
   ajv@6.12.6:
@@ -5889,6 +6064,8 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+
+  arg@4.1.3: {}
 
   arg@5.0.2: {}
 
@@ -6069,6 +6246,8 @@ snapshots:
     optionalDependencies:
       typescript: 5.3.3
 
+  create-require@1.1.1: {}
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -6097,6 +6276,8 @@ snapshots:
   detect-node-es@1.1.0: {}
 
   didyoumean@1.2.2: {}
+
+  diff@4.0.2: {}
 
   dir-glob@3.0.1:
     dependencies:
@@ -6626,6 +6807,8 @@ snapshots:
     dependencies:
       react: 18.2.0
 
+  make-error@1.3.6: {}
+
   map-obj@1.0.1: {}
 
   map-obj@4.3.0: {}
@@ -6822,12 +7005,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.41
 
-  postcss-load-config@4.0.2(postcss@8.4.41):
+  postcss-load-config@4.0.2(postcss@8.4.41)(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3)):
     dependencies:
       lilconfig: 3.0.0
       yaml: 2.3.4
     optionalDependencies:
       postcss: 8.4.41
+      ts-node: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
 
   postcss-nested@6.2.0(postcss@8.4.41):
     dependencies:
@@ -7119,11 +7303,11 @@ snapshots:
 
   tailwind-merge@2.5.2: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.10):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3))):
     dependencies:
-      tailwindcss: 3.4.10
+      tailwindcss: 3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3))
 
-  tailwindcss@3.4.10:
+  tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3)):
     dependencies:
       "@alloc/quick-lru": 5.2.0
       arg: 5.0.2
@@ -7142,7 +7326,7 @@ snapshots:
       postcss: 8.4.41
       postcss-import: 15.1.0(postcss@8.4.41)
       postcss-js: 4.0.1(postcss@8.4.41)
-      postcss-load-config: 4.0.2(postcss@8.4.41)
+      postcss-load-config: 4.0.2(postcss@8.4.41)(ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3))
       postcss-nested: 6.2.0(postcss@8.4.41)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
@@ -7181,6 +7365,24 @@ snapshots:
       typescript: 5.3.3
 
   ts-interface-checker@0.1.13: {}
+
+  ts-node@10.9.2(@types/node@20.11.5)(typescript@5.3.3):
+    dependencies:
+      "@cspotcode/source-map-support": 0.8.1
+      "@tsconfig/node10": 1.0.11
+      "@tsconfig/node12": 1.0.11
+      "@tsconfig/node14": 1.0.3
+      "@tsconfig/node16": 1.0.4
+      "@types/node": 20.11.5
+      acorn: 8.11.3
+      acorn-walk: 8.3.3
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.3.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
 
   tslib@2.6.2: {}
 
@@ -7235,6 +7437,8 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
+  v8-compile-cache-lib@3.0.1: {}
+
   validate-npm-package-license@3.0.4:
     dependencies:
       spdx-correct: 3.2.0
@@ -7273,6 +7477,8 @@ snapshots:
 
   wrappy@1.0.2: {}
 
+  ws@8.18.0: {}
+
   y18n@5.0.8: {}
 
   yallist@3.1.1: {}
@@ -7294,5 +7500,7 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
