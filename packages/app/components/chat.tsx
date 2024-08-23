@@ -259,7 +259,12 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
             <Text as="p" size="1">
               {msg.timestamp ? new Date(msg.timestamp).toLocaleString() : ""}
             </Text>
-            <Text as="p">{msg.message}</Text>
+            <Text
+              as="p"
+              dangerouslySetInnerHTML={{
+                __html: msg.message.replace(/\n/g, "<br />"),
+              }}
+            />
           </Grid>
         ))}
       </ScrollArea>
