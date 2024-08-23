@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Box, Text, ScrollArea, TextArea, Flex, Grid } from "@radix-ui/themes";
+import {
+  Box,
+  Text,
+  ScrollArea,
+  TextArea,
+  Flex,
+  Grid,
+  Spinner,
+} from "@radix-ui/themes";
 import { PersonIcon, FaceIcon } from "@radix-ui/react-icons";
 
 import * as Form from "@radix-ui/react-form";
@@ -36,11 +44,14 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(true);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [textAreaRows, setTextAreaRows] = useState(1);
+  const [loadingMessages, setLoadingMessages] = useState<boolean>(false);
 
   useEffect(() => {
     socket.onmessage = (event) => {
+      setLoadingMessages(true);
       const message = JSON.parse(event.data) as Message;
       setMessages((prev) => [...prev, message]);
+      setLoadingMessages(false);
     };
   }, [socket]);
 
@@ -195,6 +206,7 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
         } else {
           e.preventDefault();
           sendMessage(inputMessage, username);
+          setLoadingMessages(true);
           setTimeout(() => {
             const botResponse = getRandomBotResponse();
             if (botResponse) {
@@ -209,59 +221,77 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
   );
 
   return (
-    <Box style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <Box
+      p="4"
+      style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+    >
       {!isConnected && (
-        <Text style={{ color: "red", marginBottom: "10px" }}>
+        <Text color="red" mb="5">
           Connecting to chat server...
         </Text>
       )}
-      <ScrollArea
-        ref={scrollAreaRef}
-        style={{ flex: 1, padding: "16px" }}
-        onScroll={handleScroll}
-        id="chat-scroll-area"
-      >
-        {messages.map((msg, index) => {
-          return (
-            <Grid gap="1" key={index} mb="4">
-              <Flex align="center">
-                <Flex
-                  align={"center"}
-                  justify={"center"}
-                  style={{
-                    background:
-                      msg.username !== "Bot"
-                        ? "var(--blue-7)"
-                        : "var(--gray-11)",
-                    width: "1.5rem",
-                    height: "1.5rem",
-                    borderRadius: "50%",
-                  }}
-                >
-                  {msg.username !== "Bot" ? (
-                    <FaceIcon fill="var(--blue-11)" color="" />
-                  ) : (
-                    <PersonIcon color="var(--gray-5)" />
-                  )}
+      {!isConnected && loadingMessages && (
+        <Flex
+          align="center"
+          justify="center"
+          width="100vw"
+          height="calc(100vh - 50px)"
+          py="4"
+        >
+          <Spinner size="3" />
+        </Flex>
+      )}
+      {isConnected && (
+        <ScrollArea
+          ref={scrollAreaRef}
+          style={{ flex: 1 }}
+          onScroll={handleScroll}
+          id="chat-scroll-area"
+        >
+          {messages.map((msg, index) => {
+            return (
+              <Grid gap="1" key={index} mb="4">
+                <Flex align="center">
+                  <Flex
+                    align={"center"}
+                    justify={"center"}
+                    style={{
+                      background:
+                        msg.username !== "Bot"
+                          ? "var(--blue-7)"
+                          : "var(--gray-11)",
+                      width: "1.5rem",
+                      height: "1.5rem",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    {msg.username !== "Bot" ? (
+                      <FaceIcon fill="var(--blue-11)" color="" />
+                    ) : (
+                      <PersonIcon color="var(--gray-5)" />
+                    )}
+                  </Flex>
+                  <Text as="p" weight="bold" ml="2">
+                    {msg.username}:
+                  </Text>
                 </Flex>
-                <Text as="p" weight="bold" ml="2">
-                  {msg.username}:
+                <Text as="p" size="1" color="gray">
+                  {msg.timestamp
+                    ? new Date(msg.timestamp).toLocaleString()
+                    : ""}
                 </Text>
-              </Flex>
-              <Text as="p" size="1">
-                {msg.timestamp ? new Date(msg.timestamp).toLocaleString() : ""}
-              </Text>
-              <Text
-                as="p"
-                dangerouslySetInnerHTML={{
-                  __html: msg.message.replace(/\n/g, "<br />"),
-                }}
-              />
-            </Grid>
-          );
-        })}
-      </ScrollArea>
-      <Form.Root style={{ padding: "16px" }}>
+                <Text
+                  as="p"
+                  dangerouslySetInnerHTML={{
+                    __html: msg.message.replace(/\n/g, "<br />"),
+                  }}
+                />
+              </Grid>
+            );
+          })}
+        </ScrollArea>
+      )}
+      <Form.Root>
         <TextArea
           placeholder="Type a message..."
           value={inputMessage}
