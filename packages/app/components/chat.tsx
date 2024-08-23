@@ -44,12 +44,6 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
     };
   }, [socket]);
 
-  const addMessageWithDelay = useCallback((message: Message) => {
-    setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    }, 500);
-  }, []);
-
   const scrollToBottom = useCallback(() => {
     if (scrollAreaRef.current) {
       const scrollArea = scrollAreaRef.current;
@@ -99,7 +93,14 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
         if (isMessage(data)) {
           if (data.type === "message") {
             if (data.username !== username) {
-              addMessageWithDelay(data);
+              setMessages((prevMessages) => {
+                if (
+                  !prevMessages.some((msg) => msg.timestamp === data.timestamp)
+                ) {
+                  return [...prevMessages, data];
+                }
+                return prevMessages;
+              });
             }
           } else if (data.type === "history") {
             console.log("Received chat history:", data.messages);
@@ -121,13 +122,13 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
       socket.removeEventListener("message", handleMessage);
       clearInterval(checkConnection);
     };
-  }, [socket, addMessageWithDelay, username]);
+  }, [socket, username]);
 
   useEffect(() => {
+    if (!username) return;
     setMessages([
       {
         username: "Bot",
-        content: `Welcome to the chat, ${username}!`,
         timestamp: Date.now(),
         type: "message",
         message: `Welcome to the chat, ${username}!`,
@@ -136,7 +137,7 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
   }, [username]);
 
   const sendMessage = useCallback(
-    (message: string) => {
+    (message: string, username: string) => {
       const trimmedMessage = message.trim();
       if (trimmedMessage && !/^\s*$/.test(trimmedMessage)) {
         socket.send(
@@ -144,31 +145,12 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
             type: "message",
             message: trimmedMessage,
             username: username,
+            timestamp: Date.now(),
           }),
         );
         setInputMessage("");
         setShouldScrollToBottom(true);
         setIsScrolledToBottom(true);
-
-        setTimeout(() => {
-          const replyMessage = {
-            username: "Bot",
-            content: getRandomBotResponse(),
-            timestamp: Date.now(),
-            type: "message",
-            message: getRandomBotResponse() ?? "",
-          };
-          setMessages((prev) => {
-            const isLastBotMessage =
-              prev.length > 0 &&
-              prev[prev.length - 1]?.username === "Bot" &&
-              prev[prev.length - 1]?.message === replyMessage.message;
-            if (!isLastBotMessage) {
-              return [...prev, replyMessage];
-            }
-            return prev;
-          });
-        }, 1000);
       }
     },
     [username, socket],
@@ -212,12 +194,18 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
           setTextAreaRows((prevRows) => prevRows + 1);
         } else {
           e.preventDefault();
-          sendMessage(inputMessage);
+          sendMessage(inputMessage, username);
+          setTimeout(() => {
+            const botResponse = getRandomBotResponse();
+            if (botResponse) {
+              sendMessage(botResponse, "Bot");
+            }
+          }, 1000);
           setTextAreaRows(1);
         }
       }
     },
-    [inputMessage, sendMessage],
+    [inputMessage, sendMessage, username],
   );
 
   return (
@@ -231,42 +219,47 @@ const Chat: React.FC<ChatProps> = ({ username, socket }) => {
         ref={scrollAreaRef}
         style={{ flex: 1, padding: "16px" }}
         onScroll={handleScroll}
+        id="chat-scroll-area"
       >
-        {messages.map((msg, index) => (
-          <Grid gap="1" key={index} mb="4">
-            <Flex align="center">
-              <Flex
-                align={"center"}
-                justify={"center"}
-                style={{
-                  background:
-                    msg.username !== "Bot" ? "var(--blue-7)" : "var(--gray-11)",
-                  width: "1.5rem",
-                  height: "1.5rem",
-                  borderRadius: "50%",
-                }}
-              >
-                {msg.username !== "Bot" ? (
-                  <FaceIcon fill="var(--blue-11)" color="" />
-                ) : (
-                  <PersonIcon color="var(--gray-5)" />
-                )}
+        {messages.map((msg, index) => {
+          return (
+            <Grid gap="1" key={index} mb="4">
+              <Flex align="center">
+                <Flex
+                  align={"center"}
+                  justify={"center"}
+                  style={{
+                    background:
+                      msg.username !== "Bot"
+                        ? "var(--blue-7)"
+                        : "var(--gray-11)",
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    borderRadius: "50%",
+                  }}
+                >
+                  {msg.username !== "Bot" ? (
+                    <FaceIcon fill="var(--blue-11)" color="" />
+                  ) : (
+                    <PersonIcon color="var(--gray-5)" />
+                  )}
+                </Flex>
+                <Text as="p" weight="bold" ml="2">
+                  {msg.username}:
+                </Text>
               </Flex>
-              <Text as="p" weight="bold" ml="2">
-                {msg.username}:
+              <Text as="p" size="1">
+                {msg.timestamp ? new Date(msg.timestamp).toLocaleString() : ""}
               </Text>
-            </Flex>
-            <Text as="p" size="1">
-              {msg.timestamp ? new Date(msg.timestamp).toLocaleString() : ""}
-            </Text>
-            <Text
-              as="p"
-              dangerouslySetInnerHTML={{
-                __html: msg.message.replace(/\n/g, "<br />"),
-              }}
-            />
-          </Grid>
-        ))}
+              <Text
+                as="p"
+                dangerouslySetInnerHTML={{
+                  __html: msg.message.replace(/\n/g, "<br />"),
+                }}
+              />
+            </Grid>
+          );
+        })}
       </ScrollArea>
       <Form.Root style={{ padding: "16px" }}>
         <TextArea

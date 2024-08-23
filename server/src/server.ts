@@ -9,7 +9,6 @@ interface ChatMessage {
   username: string;
   message: string;
   timestamp: number;
-  content?: string | undefined;
   messages?: ChatMessage[] | undefined;
 }
 
